@@ -10,3 +10,15 @@ C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.DAL\obj\Debug
 C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.DAL\obj\Debug\net7.0\refint\WebApi.DAL.dll
 C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.DAL\obj\Debug\net7.0\WebApi.DAL.pdb
 C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.DAL\obj\Debug\net7.0\ref\WebApi.DAL.dll
+C:\Users\user\Documents\Suli\be\WebApi.DAL\bin\Debug\net7.0\WebApi.DAL.deps.json
+C:\Users\user\Documents\Suli\be\WebApi.DAL\bin\Debug\net7.0\WebApi.DAL.dll
+C:\Users\user\Documents\Suli\be\WebApi.DAL\bin\Debug\net7.0\WebApi.DAL.pdb
+C:\Users\user\Documents\Suli\be\WebApi.DAL\obj\Debug\net7.0\WebApi.DAL.csproj.AssemblyReference.cache
+C:\Users\user\Documents\Suli\be\WebApi.DAL\obj\Debug\net7.0\WebApi.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\Documents\Suli\be\WebApi.DAL\obj\Debug\net7.0\WebApi.DAL.AssemblyInfoInputs.cache
+C:\Users\user\Documents\Suli\be\WebApi.DAL\obj\Debug\net7.0\WebApi.DAL.AssemblyInfo.cs
+C:\Users\user\Documents\Suli\be\WebApi.DAL\obj\Debug\net7.0\WebApi.DAL.csproj.CoreCompileInputs.cache
+C:\Users\user\Documents\Suli\be\WebApi.DAL\obj\Debug\net7.0\WebApi.DAL.dll
+C:\Users\user\Documents\Suli\be\WebApi.DAL\obj\Debug\net7.0\refint\WebApi.DAL.dll
+C:\Users\user\Documents\Suli\be\WebApi.DAL\obj\Debug\net7.0\WebApi.DAL.pdb
+C:\Users\user\Documents\Suli\be\WebApi.DAL\obj\Debug\net7.0\ref\WebApi.DAL.dll
