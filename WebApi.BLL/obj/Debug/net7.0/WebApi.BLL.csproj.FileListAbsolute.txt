@@ -1,0 +1,15 @@
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\bin\Debug\net7.0\WebApi.BLL.deps.json
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\bin\Debug\net7.0\WebApi.BLL.dll
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\bin\Debug\net7.0\WebApi.BLL.pdb
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\bin\Debug\net7.0\WebApi.DAL.dll
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\bin\Debug\net7.0\WebApi.DAL.pdb
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\obj\Debug\net7.0\WebApi.BLL.csproj.AssemblyReference.cache
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\obj\Debug\net7.0\WebApi.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\obj\Debug\net7.0\WebApi.BLL.AssemblyInfoInputs.cache
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\obj\Debug\net7.0\WebApi.BLL.AssemblyInfo.cs
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\obj\Debug\net7.0\WebApi.BLL.csproj.CoreCompileInputs.cache
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\obj\Debug\net7.0\WebApi.BLL.csproj.CopyComplete
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\obj\Debug\net7.0\WebApi.BLL.dll
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\obj\Debug\net7.0\refint\WebApi.BLL.dll
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\obj\Debug\net7.0\WebApi.BLL.pdb
+C:\Users\Asus\Desktop\Egyetem\Önlab\database\WebapiProject\WebApi.BLL\obj\Debug\net7.0\ref\WebApi.BLL.dll
