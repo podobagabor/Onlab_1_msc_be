@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -44,13 +46,33 @@ namespace WebapiProject.Controllers
         }
         // POST api/<UserController>
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserDto registerValue)
+        public async Task<IActionResult> Register([FromForm] RegisterUserDto registerValue)
         {
+            string? blobUrl;
+            if (registerValue.Photo != null)
+            {
+                BlobServiceClient blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=containeraccount;AccountKey=HG14o1kL6C3LSnRbOSREedGlPl/Fd9TNLNGSgldW6Itd6Dqm4I9rEfQtdpsBLqw0AWMbydHH76WM+ASt8WLdXw==;EndpointSuffix=core.windows.net");
+                BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("msc-onlab");
+
+                string blobName = Guid.NewGuid().ToString();
+                BlobClient blobClient = containerClient.GetBlobClient(blobName);
+                using (Stream stream = registerValue.Photo.OpenReadStream())
+                {
+                    var blobHttpHeader = new BlobHttpHeaders { ContentType = "image/jpeg" };
+                    await blobClient.UploadAsync(stream, new BlobUploadOptions { HttpHeaders = blobHttpHeader });
+                }
+                 blobUrl = blobClient.Uri.ToString();
+            } else
+            {
+                blobUrl = null;
+            }
+            
             var user = new User
             {
                 UserName = registerValue.Email,
                 Email = registerValue.Email,
-                Name = registerValue.Name
+                Name = registerValue.Name,
+                Photo = blobUrl,
             };
             var passwordHasher = new PasswordHasher<User>();
             user.PasswordHash = passwordHasher.HashPassword(user, registerValue.Password);
@@ -73,8 +95,24 @@ namespace WebapiProject.Controllers
                 Email = value.Email,
                 Name = value.Name,
                 UserName = value.Name,
+                Photo = value.Photo,
             };
             
+            return Ok(user);
+        }
+        [HttpGet("findUser")]
+        public async Task<ActionResult<UserDto>> GetUserFromId(int id)
+        {
+            var value = await _userManager.FindByIdAsync(id.ToString());
+            var user = new UserDto
+            {
+                Id = value.Id,
+                Email = value.Email,
+                Name = value.Name,
+                UserName = value.Name,
+                Photo = value.Photo,
+            };
+
             return Ok(user);
         }
     }

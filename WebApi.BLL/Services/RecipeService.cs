@@ -62,6 +62,7 @@ namespace WebApi.BLL.Services
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=containeraccount;AccountKey=HG14o1kL6C3LSnRbOSREedGlPl/Fd9TNLNGSgldW6Itd6Dqm4I9rEfQtdpsBLqw0AWMbydHH76WM+ASt8WLdXw==;EndpointSuffix=core.windows.net");
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("msc-onlab");
+
             string blobName = Guid.NewGuid().ToString();
             BlobClient blobClient = containerClient.GetBlobClient(blobName);
             using (Stream stream = recipe.Photo.OpenReadStream())
@@ -75,13 +76,13 @@ namespace WebApi.BLL.Services
             foreach (DescriptionCreateDto descriptionDto in recipe.Descriptions)
             {
                 string descriptionBlobName = Guid.NewGuid().ToString();
-                BlobClient descriptionBlobClient = containerClient.GetBlobClient(blobName);
+                BlobClient descriptionBlobClient = containerClient.GetBlobClient(descriptionBlobName);
                 using (Stream stream = descriptionDto.Photo.OpenReadStream())
                 {
                     var blobHttpHeader = new BlobHttpHeaders { ContentType = "image/jpeg" };
-                    await blobClient.UploadAsync(stream, new BlobUploadOptions { HttpHeaders = blobHttpHeader });
+                    await descriptionBlobClient.UploadAsync(stream, new BlobUploadOptions { HttpHeaders = blobHttpHeader });
                 }
-                string descriptionblobUrl = blobClient.Uri.ToString();
+                string descriptionblobUrl = descriptionBlobClient.Uri.ToString();
                 efDescriptions.Add(new Description()
                 {
                     Text = descriptionDto.Text,

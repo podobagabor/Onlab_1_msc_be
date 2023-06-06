@@ -43,7 +43,7 @@ namespace WebApi.BLL.Dtos
     public class DescriptionCreateDto 
     {
         public string Text { get; set; } = null!;
-        public IFormFile Photo { get; set; } = null!;
+        public IFormFile? Photo { get; set; }
     }
 
 
@@ -53,6 +53,7 @@ namespace WebApi.BLL.Dtos
         public string Password { get; set; }
         public string Username { get; set; }
         public string Name { get; set; }
+        public IFormFile? Photo { get; set; }
     }
 
     public class LoginUserDto
@@ -67,6 +68,7 @@ namespace WebApi.BLL.Dtos
         public string UserName { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Name { get; set; } = null!;
+        public string? Photo { get; set; }
     }
 
   
@@ -74,14 +76,7 @@ namespace WebApi.BLL.Dtos
     public record DescriptionDto
     {
         public string Text { get; set; } = null!;
-        public string Photo { get; set; } = null!;
-    }
-
-    public record CommentDto
-    {
-        public string Body { get; set; } = null!;
-        public double? Rating { get; set; }
-        public string Photo { get; set; } = null!;
+        public string? Photo { get; set; }
     }
 
 }

@@ -31,6 +31,7 @@ builder.Services.AddDbContext<WebApiDbContext>(o =>
 builder.Services.AddAutoMapper(typeof(WebApiProfile));
 builder.Services.AddTransient<IRecipeService,RecipeService>();
 builder.Services.AddTransient<IIngredientsService, IngredientService>();
+builder.Services.AddTransient<ICommentService, CommentService>();
 //builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
         .AddEntityFrameworkStores<WebApiDbContext>();
