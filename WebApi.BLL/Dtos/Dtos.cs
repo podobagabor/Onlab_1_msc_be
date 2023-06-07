@@ -75,6 +75,7 @@ namespace WebApi.BLL.Dtos
 
     public record DescriptionDto
     {
+        public int Id { get; set; }
         public string Text { get; set; } = null!;
         public string? Photo { get; set; }
     }

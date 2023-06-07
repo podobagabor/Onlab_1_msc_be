@@ -2,15 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using WebApi.BLL.Dtos;
 using WebApi.BLL.Interfaces;
 using WebApi.DAL.Context;
@@ -28,6 +20,7 @@ namespace WebApi.BLL.Services
             _context = context;
             _mapper = mapper;
         }
+
         public async Task DeleteRecipeAsync(int recipeId)
         {
             _context.Recipes.Remove(new DAL.Entities.Recipe() { Id = recipeId });
@@ -71,7 +64,7 @@ namespace WebApi.BLL.Services
                 await blobClient.UploadAsync(stream, new BlobUploadOptions { HttpHeaders = blobHttpHeader });
             }
             string blobUrl = blobClient.Uri.ToString();
-            var efComments =  new List<Comment>();
+            var efComments = new List<Comment>();
             var efDescriptions = new List<Description>();
             foreach (DescriptionCreateDto descriptionDto in recipe.Descriptions)
             {
@@ -118,31 +111,108 @@ namespace WebApi.BLL.Services
 
             };
             _context.Recipes.Add(efRecipe);
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
             return await GetRecipeAsync(efRecipe.Id);
         }
 
-        public async Task UpdateRecipeAsync(int recipeId,RecipeDto recipe)
+        public async Task<RecipeDto> UpdateRecipeAsync(int recipeId, RecipeDto recipe)
         {
-            var efRecipe = _mapper.Map<DAL.Entities.Recipe>(recipe);
-            efRecipe.Id = recipeId;
-            var entry = _context.Attach(efRecipe);
-            entry.State = EntityState.Modified;
-            try
+            // Retrieve the existing recipe from the database
+            var existingRecipe = await GetRecipeAsync(recipeId);
+            var efRecipe = await _context.Recipes.FindAsync(recipeId);
+            if (existingRecipe == null)
             {
-                await _context.SaveChangesAsync();
+                throw new Exception("Recipe not found");
             }
-            catch (Exception ex)
+
+            foreach(CommentDto comment1 in existingRecipe.Comments)
             {
-                throw new Exception("Nem található entitás");
+                var dbComment = await _context.Comments.FindAsync(comment1.Id);
+                if (dbComment != null)
+                {
+                    _context.Comments.Remove(dbComment);
+                }
             }
+
+            foreach(DescriptionDto description1 in existingRecipe.Descriptions)
+            {
+                var dbDescription = await _context.Descriptions.FindAsync(description1.Id);
+                if (dbDescription != null)
+                {
+                    _context.Descriptions.Remove(dbDescription);
+                }
+            }
+
+            foreach(IngredientGroupDto ingredientGroupDto in existingRecipe.Ingredients)
+            {
+                foreach(IngredientDto ingredientDto in ingredientGroupDto.Ingredients)
+                {
+                    var dbIngredientItemDto = await _context.IngredientItems.FindAsync(ingredientDto.Id);
+                    if(dbIngredientItemDto != null)
+                    {
+                        _context.IngredientItems.Remove(dbIngredientItemDto);
+                    }
+                }
+                var dbIngredientGroupDto = await _context.IngredientGroups.FindAsync(ingredientGroupDto.Id);
+                if (dbIngredientGroupDto != null)
+                {
+                    _context.IngredientGroups.Remove(dbIngredientGroupDto);
+                }
+            }
+
+            // Update the properties of the existing recipe
+            efRecipe.Name = recipe.Name;
+            efRecipe.Photo = recipe.Photo;
+            efRecipe.Rating = recipe.Rating;
+
+            foreach (DescriptionDto description in recipe.Descriptions)
+            {
+                efRecipe.Descriptions.Add(new Description()
+                {
+                    Text = description.Text,
+                    Photo = description.Photo,
+                });
+            }
+
+            foreach (CommentDto comment in recipe.Comments)
+            {
+
+                efRecipe.Comments.Add(new Comment()
+                {
+                    Photo = comment.Photo,
+                    Rating = comment.Rating,
+                    UserId = comment.UserId,
+                    Body = comment.Body,
+                });
+            }
+          
+             foreach (IngredientGroupDto ingredienGroupDto in recipe.Ingredients)
+            {
+                var newGroup = new IngredientGroup()
+                {
+                    Name = ingredienGroupDto.Name,
+                };
+                foreach (IngredientDto ingredientItemDto in ingredienGroupDto.Ingredients)
+                {
+                    newGroup.Ingredients.Add(new IngredientItem()
+                    {
+                        Amount = ingredientItemDto.Amount,
+                        IngredientId = ingredientItemDto.Id
+                    });
+                }
+                efRecipe.Ingredients.Add(newGroup);
+            }
+            
+
+            // Update other properties as needed
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+
+            // Retrieve the updated recipe
+            var updatedRecipe = await GetRecipeAsync(recipeId);
+            return updatedRecipe;
         }
 
-        private async Task<byte[]> GetByteArrayFromImageAsync(byte[] image)
-        {
-            using var ms = new MemoryStream();
-           // await image.CopyToAsync(ms);
-            return ms.ToArray();
-        }
     }
 }

@@ -15,7 +15,6 @@ namespace WebApi.DAL.Entities
         public string Photo { get; set; } = null!;
         public int UserId { get; set; }
 
-
         public User User { get; set; } = null!;
         public ICollection<Description> Descriptions { get; set; }
         public ICollection<Comment> Comments { get; set; }
@@ -28,7 +27,5 @@ namespace WebApi.DAL.Entities
             Ingredients = new List<IngredientGroup>();
 
         }
-
-
     }
 }

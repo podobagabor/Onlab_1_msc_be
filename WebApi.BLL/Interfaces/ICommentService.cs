@@ -13,6 +13,6 @@ namespace WebApi.BLL.Interfaces
         public Task<IEnumerable<CommentDto>> GetCommentsAsync();
         public Task<CommentDto> InsertCommentAsync(CommentCreateDto comment);
         public Task<CommentDto> UpdateCommentAsync(CommentCreateDto comment);
-        public Task<CommentDto> DeleteCommentAsync(int comment);
+        public Task DeleteCommentAsync(int comment);
     }
 }

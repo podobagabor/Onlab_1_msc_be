@@ -20,9 +20,17 @@ namespace WebApi.BLL.Services
             _context = context;
             _mapper = mapper;
         }
-        public Task<CommentDto> DeleteCommentAsync(int comment)
+        public async Task DeleteCommentAsync(int id)
         {
-            throw new NotImplementedException();
+            var comment = await _context.Comments.FindAsync(id);
+
+            if (comment == null)
+            {
+                throw new Exception("comment not found");
+            }
+
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<CommentDto> GetCommentAsync(int comment)

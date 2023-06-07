@@ -8,6 +8,7 @@ namespace WebApi.BLL.Dtos
 {
     public record IngredientGroupDto
     {
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
         public ICollection<IngredientDto> Ingredients { get; set; }
 

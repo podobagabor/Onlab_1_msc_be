@@ -103,17 +103,23 @@ namespace WebapiProject.Controllers
         [HttpGet("findUser")]
         public async Task<ActionResult<UserDto>> GetUserFromId(int id)
         {
-            var value = await _userManager.FindByIdAsync(id.ToString());
-            var user = new UserDto
+            try
             {
-                Id = value.Id,
-                Email = value.Email,
-                Name = value.Name,
-                UserName = value.Name,
-                Photo = value.Photo,
-            };
-
-            return Ok(user);
+                var value = await _userManager.FindByIdAsync(id.ToString());
+                var user = new UserDto
+                {
+                    Id = value.Id,
+                    Email = value.Email,
+                    Name = value.Name,
+                    UserName = value.Name,
+                    Photo = value.Photo,
+                };
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("elem nem található");
+            }
         }
     }
 }
