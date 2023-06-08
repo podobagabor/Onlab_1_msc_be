@@ -1,6 +1,10 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics.Metrics;
+using System.Text;
 using WebApi.BLL.Dtos;
 using WebApi.BLL.Interfaces;
 using WebApi.BLL.Services;
@@ -11,15 +15,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
+    options.AddPolicy("AllowAngularApp",
         builder =>
         {
-            builder.AllowAnyOrigin()
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
+            builder.WithOrigins("http://localhost:4200")
+                   .AllowAnyMethod()
+                   .AllowAnyHeader()
+                   .AllowCredentials()
+                   .WithExposedHeaders("Content-Disposition")
+                   .SetIsOriginAllowedToAllowWildcardSubdomains();
         });
 });
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -31,6 +37,7 @@ builder.Services.AddDbContext<WebApiDbContext>(o =>
 builder.Services.AddAutoMapper(typeof(WebApiProfile));
 builder.Services.AddTransient<IRecipeService,RecipeService>();
 builder.Services.AddTransient<IIngredientsService, IngredientService>();
+builder.Services.AddTransient<IArticleService, ArticleService>();
 builder.Services.AddTransient<ICommentService, CommentService>();
 //builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -50,8 +57,10 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseCors();
+app.UseCors("AllowAngularApp");
 
 app.MapControllers();
 
 app.Run();
+
+

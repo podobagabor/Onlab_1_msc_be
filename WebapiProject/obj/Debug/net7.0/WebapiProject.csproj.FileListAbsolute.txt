@@ -598,3 +598,4 @@ C:\Users\user\Documents\Suli\be\WebapiProject\obj\Debug\net7.0\refint\WebapiProj
 C:\Users\user\Documents\Suli\be\WebapiProject\obj\Debug\net7.0\WebapiProject.pdb
 C:\Users\user\Documents\Suli\be\WebapiProject\obj\Debug\net7.0\WebapiProject.genruntimeconfig.cache
 C:\Users\user\Documents\Suli\be\WebapiProject\obj\Debug\net7.0\ref\WebapiProject.dll
+C:\Users\user\Documents\Suli\be\WebapiProject\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

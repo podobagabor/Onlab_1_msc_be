@@ -42,7 +42,13 @@ namespace WebapiProject.Controllers
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return BadRequest(ModelState);
             }
-            return Ok(result);
+            if(result.Succeeded)
+            {
+                return Ok(user);
+            }
+            return Unauthorized();
+
+
         }
         // POST api/<UserController>
         [HttpPost("register")]
@@ -89,16 +95,20 @@ namespace WebapiProject.Controllers
         public async Task<ActionResult<UserDto>> GetUser()
         {
             var value = await _userManager.GetUserAsync(User);
-            var user = new UserDto
+            if(value != null)
             {
-                Id = value.Id,
-                Email = value.Email,
-                Name = value.Name,
-                UserName = value.Name,
-                Photo = value.Photo,
-            };
-            
-            return Ok(user);
+                var user = new UserDto
+                {
+                    Id = value.Id,
+                    Email = value.Email,
+                    Name = value.Name,
+                    UserName = value.Name,
+                    Photo = value.Photo,
+                };
+                return Ok(user);
+            }
+
+            return null;
         }
         [HttpGet("findUser")]
         public async Task<ActionResult<UserDto>> GetUserFromId(int id)
