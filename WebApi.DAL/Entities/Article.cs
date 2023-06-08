@@ -15,7 +15,6 @@ namespace WebApi.DAL.Entities
         public User User { get; set; } = null!;
         public string Photo { get; set; } = null!;
         public ICollection<Comment> Comments { get; set; }
-
         public Article()
         {
             Comments = new List<Comment>();

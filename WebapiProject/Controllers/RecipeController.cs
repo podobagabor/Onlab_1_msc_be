@@ -50,10 +50,11 @@ namespace WebapiProject.Controllers
 
         // PUT api/<RecipeController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutAsync(int id, [FromBody] RecipeDto value)
+        public async Task<ActionResult<RecipeDto>> PutAsync(int id, [FromBody] RecipeDto value)
         {
-            await _recipeService.UpdateRecipeAsync(id, value);
-            return NoContent();
+           var updated = await _recipeService.UpdateRecipeAsync(id, value);
+            return Ok(updated);
+            
         }
 
         // DELETE api/<RecipeController>/5

@@ -14,6 +14,5 @@ namespace WebApi.DAL.Entities
         public int IngredientGroupId { get; set; }
         public Ingredient Ingredient { get; set; } = null!;
         public IngredientGroup IngredientGroup { get; set;} = null!;
-        
     }
 }

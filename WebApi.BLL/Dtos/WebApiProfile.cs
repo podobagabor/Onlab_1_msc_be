@@ -12,6 +12,7 @@ namespace WebApi.BLL.Dtos
     {
         public WebApiProfile() 
         {
+            CreateMap<Comment, CommentDto>().ReverseMap();
             CreateMap<DAL.Entities.Recipe, RecipeDto>().ReverseMap();
             CreateMap<DAL.Entities.IngredientItem, IngredientDto>().ForMember(
                 dest => dest.Id,
@@ -26,6 +27,7 @@ namespace WebApi.BLL.Dtos
             CreateMap<DAL.Entities.Description, DescriptionDto>().ReverseMap();
             CreateMap<DAL.Entities.Comment, CommentDto>().ReverseMap();
             CreateMap<DAL.Entities.User, UserDto>().ReverseMap();
+            CreateMap<Article, ArticleDto>().ReverseMap();
         }
     }
 }

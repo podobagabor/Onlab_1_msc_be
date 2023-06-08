@@ -12,7 +12,7 @@ namespace WebApi.BLL.Interfaces
         public Task<RecipeDto> GetRecipeAsync(int recipeId);
         public Task<IEnumerable<RecipeDto>> GetRecipesAsync();
         public Task<RecipeDto> InsertRecipeAsync(RecipeCreateDto recipe);
-        public Task UpdateRecipeAsync(int recipeId,RecipeDto recipe);
+        public Task<RecipeDto> UpdateRecipeAsync(int recipeId,RecipeDto recipe);
         public Task DeleteRecipeAsync(int recipeId);
     }
 }

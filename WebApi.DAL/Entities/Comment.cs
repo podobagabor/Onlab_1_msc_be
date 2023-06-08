@@ -11,7 +11,7 @@ namespace WebApi.DAL.Entities
         public int Id { get; set; }
         public string Body { get; set; } = null!;
         public double? Rating { get; set; }
-        public string Photo { get; set; } = null!;
+        public string? Photo { get; set; }
         public int UserId { get; set; }
     }
 }
