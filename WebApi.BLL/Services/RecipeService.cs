@@ -23,9 +23,46 @@ namespace WebApi.BLL.Services
 
         public async Task DeleteRecipeAsync(int recipeId)
         {
-            _context.Recipes.Remove(new DAL.Entities.Recipe() { Id = recipeId });
             try
             {
+                var existingRecipe = await GetRecipeAsync(recipeId);
+                foreach (CommentDto comment1 in existingRecipe.Comments)
+                {
+                    var dbComment = await _context.Comments.FindAsync(comment1.Id);
+                    if (dbComment != null)
+                    {
+                        _context.Comments.Remove(dbComment);
+                    }
+                }
+
+                foreach (DescriptionDto description1 in existingRecipe.Descriptions)
+                {
+                    var dbDescription = await _context.Descriptions.FindAsync(description1.Id);
+                    if (dbDescription != null)
+                    {
+                        _context.Descriptions.Remove(dbDescription);
+                    }
+                }
+
+                foreach (IngredientGroupDto ingredientGroupDto in existingRecipe.Ingredients)
+                {
+                    foreach (IngredientDto ingredientDto in ingredientGroupDto.Ingredients)
+                    {
+                        var dbIngredientItemDto = await _context.IngredientItems.FindAsync(ingredientDto.Id);
+                        if (dbIngredientItemDto != null)
+                        {
+                            _context.IngredientItems.Remove(dbIngredientItemDto);
+                        }
+                    }
+                    var dbIngredientGroupDto = await _context.IngredientGroups.FindAsync(ingredientGroupDto.Id);
+                    if (dbIngredientGroupDto != null)
+                    {
+                        _context.IngredientGroups.Remove(dbIngredientGroupDto);
+                    }
+                }
+                await _context.SaveChangesAsync();
+                var entity = await _context.Recipes.FindAsync(recipeId);
+                _context.Recipes.Remove(entity);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)

@@ -28,9 +28,21 @@ namespace WebApi.BLL.Services
 
         public async Task DeleteArticleAsync(int articleId)
         {
-            _context.Articles.Remove(new DAL.Entities.Article() { Id = articleId });
             try
             {
+                var existingArticle = await GetArticleAsync(articleId);
+                var efArticle = await _context.Articles.FindAsync(articleId);
+
+                foreach (CommentDto comment1 in existingArticle.Comments)
+                {
+                    var dbComment = await _context.Comments.FindAsync(comment1.Id);
+                    if (dbComment != null)
+                    {
+                        _context.Comments.Remove(dbComment);
+                    }
+                }
+                await _context.SaveChangesAsync();
+                _context.Articles.Remove(efArticle);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
